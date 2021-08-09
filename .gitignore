@@ -1,0 +1,13 @@
+# ignore intellij
+#
+.idea
+*.iml
+*.ipr
+*.iws
+
+# ignore generated
+#
+cmd/bootstrap/go.sum
+mkfiles.sh
+mkfiles.sh.bootstrap
+bootstrap
