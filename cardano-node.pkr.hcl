@@ -12,10 +12,10 @@ source "amazon-ebs" "amazon" {
 
   associate_public_ip_address = true
   instance_type = "m5.2xlarge"
-  region = "us-east-2"
+  region = var.region
   ssh_username = "ec2-user"
-  subnet_id = "subnet-0575ab4529d4a3128"
-  vpc_id = "vpc-0e91af5d62d4fd92c"
+  subnet_id = var.subnet_id
+  vpc_id = var.vpc_id
 
   launch_block_device_mappings {
     volume_type = "gp2"
@@ -65,3 +65,19 @@ build {
     ]
   }
 }
+
+variable "region" {
+  type = string
+  default = "us-east-2"
+}
+
+variable "subnet_id" {
+  type = string
+  default = "subnet-0575ab4529d4a3128"
+}
+
+variable "vpc_id" {
+  type = string
+  default = "vpc-0e91af5d62d4fd92c"
+}
+
