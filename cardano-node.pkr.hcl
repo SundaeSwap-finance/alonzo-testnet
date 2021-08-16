@@ -61,7 +61,8 @@ build {
       "scripts/install-nix.sh",
       "scripts/install-cardano-node.sh",
       "scripts/install-docker.sh",
-      "scripts/install-bootstrap.sh"
+      "scripts/install-bootstrap.sh",
+      "scripts/install-jq.sh"
     ]
   }
 }
