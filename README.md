@@ -24,7 +24,7 @@ The AMI contains:
 
 Once the AMI has been built, launch an instance that has sufficient memory and CPU 
 to run 3 nodes.  It is recommended to use `t3.xlarge` at a minimum.  The instance
-is built using `Amazon Linux2` so the login will be `ec2-user`.
+is built using `Ubuntu 20.04` so the login will be `ubuntu`.
 
 After you login, you can start your testnet as follows:
 

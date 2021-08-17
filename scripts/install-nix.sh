@@ -2,26 +2,6 @@
 
 set -eu
 
-export LD_LIBRARY_PATH="/lib:/usr/local/lib"
-
-
-# install common packages
-#
-sudo yum install -y git bash curl wget make g++ libtool autoconf automake musl
-
-
-# install IOHK version of libsodium
-#
-mkdir -p src
-git clone https://github.com/input-output-hk/libsodium src/libsodium
-cd src/libsodium
-git checkout 66f017f1
-./autogen.sh
-./configure
-make
-sudo make install
-
-
 # install nix
 #
 curl -L https://nixos.org/nix/install | sh
@@ -44,6 +24,6 @@ sudo mv /tmp/nix.conf /etc/nix/nix.conf
 
 # install cabal
 #
-. /home/ec2-user/.nix-profile/etc/profile.d/nix.sh
+. /home/ubuntu/.nix-profile/etc/profile.d/nix.sh
 nix-env -i cabal-install
 cabal update

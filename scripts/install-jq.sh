@@ -2,5 +2,5 @@
 
 set -eu
 
-sudo yum install -y jq
+sudo apt-get update && sudo apt-get install -y jq
 

@@ -2,7 +2,14 @@
 
 set -eu
 
-sudo yum install -y golang
+export DEBIAN_FRONTEND="noninteractive"
+
+sudo apt-get install && sudo apt-get install -y tzdata curl
+
+curl -L --output /tmp/go1.17.linux-amd64.tar.gz https://golang.org/dl/go1.17.linux-amd64.tar.gz
+sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf /tmp/go1.17.linux-amd64.tar.gz
+rm -f /tmp/go1.17.linux-amd64.tar.gz
+sudo ln -s /usr/local/go/bin/go /usr/local/bin/go
 
 mkdir -p "${HOME}/bin"
 cd "/tmp/bootstrap"

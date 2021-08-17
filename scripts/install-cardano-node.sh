@@ -8,13 +8,14 @@ export LD_LIBRARY_PATH="/lib:/usr/local/lib"
 
 # install cardano-node
 #
-git clone https://github.com/input-output-hk/cardano-node "${HOME}/src/cardano-node"
-cd "${HOME}/src/cardano-node"
+mkdir -p src
+git clone https://github.com/input-output-hk/cardano-node src/cardano-node
+cd src/cardano-node
 git checkout ${GIT_TAG}
 
 # build
 #
-. /home/ec2-user/.nix-profile/etc/profile.d/nix.sh
+. /home/ubuntu/.nix-profile/etc/profile.d/nix.sh
 nix-shell --run "cabal build cardano-node"
 nix-shell --run "cabal build cardano-cli"
 

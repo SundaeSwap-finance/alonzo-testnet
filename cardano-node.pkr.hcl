@@ -13,27 +13,29 @@ source "amazon-ebs" "amazon" {
   associate_public_ip_address = true
   instance_type = "m5.2xlarge"
   region = var.region
-  ssh_username = "ec2-user"
+  ssh_username = "ubuntu"
   subnet_id = var.subnet_id
   vpc_id = var.vpc_id
 
   launch_block_device_mappings {
     volume_type = "gp2"
-    device_name = "/dev/xvda"
+    device_name = "/dev/sda1"
     volume_size = 250
     delete_on_termination = true
   }
 
   source_ami_filter {
     filters = {
-      name = "*amzn2-ami-hvm-*"
-      root-device-type = "ebs"
-      virtualization-type = "hvm"
+      "virtualization-type": "hvm",
+      "architecture": "x86_64",
+      "name": "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*",
+      "block-device-mapping.volume-type": "gp2",
+      "root-device-type": "ebs"
     }
-    most_recent = true
     owners = [
-      "amazon"
+      "099720109477"
     ]
+    most_recent = true
   }
 }
 
@@ -58,11 +60,13 @@ build {
     ]
     scripts = [
       "scripts/install-tailscale.sh",
+      "scripts/install-libsodium.sh",
       "scripts/install-nix.sh",
+      "scripts/install-stack.sh",
       "scripts/install-cardano-node.sh",
       "scripts/install-docker.sh",
       "scripts/install-bootstrap.sh",
-      "scripts/install-jq.sh"
+      "scripts/install-jq.sh",
     ]
   }
 }
