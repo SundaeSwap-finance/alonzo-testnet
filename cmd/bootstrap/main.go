@@ -130,7 +130,7 @@ func mkfiles(_ *cli.Context) error {
 		return nil
 	}
 
-	cmd := exec.Command("/bin/sh", filename, "alonzo")
+	cmd := exec.Command("/bin/bash", filename, "alonzo")
 	cmd.Dir = opts.Path.CardanoNode
 	cmd.Stdout = os.Stdout
 	cmd.Stdout = os.Stdout
