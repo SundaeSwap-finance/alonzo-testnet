@@ -26,6 +26,10 @@ export CARDANO_NODE_SOCKET_PATH=\${HOME}/alonzo-testnet/node-bft1/node.sock
 #
 export PATH="\${PATH}:\${HOME}/bin"
 
+# aliases
+#
+alias ls="ls -sF --color"
+
 EOF
 
 if [ -f /tmp/restart-testnet.sh ] ; then
