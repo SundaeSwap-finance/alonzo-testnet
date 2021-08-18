@@ -18,7 +18,13 @@ go build -o "${HOME}/bin/bootstrap"
 
 cat <<EOF >> "${HOME}/.bash_profile"
 
+# set CARDANO_NODE_SOCKET_PATH to cardano-cli
+#
 export CARDANO_NODE_SOCKET_PATH=\${HOME}/alonzo-testnet/node-bft1/node.sock
+
+# add ${HOME}/bin to path
+#
+export PATH="\${PATH}:\${HOME}/bin"
 
 EOF
 
