@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "amazon" {
-  ami_name = "alonzo-purple-{{timestamp}}"
+  ami_name = "alonzo-rc1-{{timestamp}}"
 
   associate_public_ip_address = true
   instance_type = "m5.2xlarge"
@@ -40,7 +40,7 @@ source "amazon-ebs" "amazon" {
 }
 
 build {
-  name = "alonzo-purple-1.0.1"
+  name = "alonzo-rc1"
   sources = [
     "source.amazon-ebs.amazon"
   ]
