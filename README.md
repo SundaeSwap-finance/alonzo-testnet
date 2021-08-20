@@ -59,6 +59,12 @@ bootstrap mkfiles -n minFeeA=100 -n minFeeB=12
 bootstrap mkfiles -m 31415 -n maxTxSize=65384 -n maxLovelaceSupply=10000000000000000 -n minFeeA=0
 ```
 
+#### alonzo-purple rc1
+
+```bash
+bootstrap mkfiles -m 31415 -n maxTxSize=16384 -n maxLovelaceSupply=10000000000000000 -n minFeeA=44 -n minFeeB=155381
+```
+
 ### Additional Packages
 
 The following additional packages have also been installed to facilitate
