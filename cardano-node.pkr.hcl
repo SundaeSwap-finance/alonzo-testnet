@@ -26,19 +26,49 @@ source "amazon-ebs" "amazon" {
     delete_on_termination = true
   }
 
-  run_volume_tags {
-    Name = "alonzo-testnet"
-    sundaeswap_name = "alonzo-testnet"
-    sundaeswap_ami_id = "{{ .SourceAMI }}"
-    sundaeswap_ami_name = "{{ .SourceAMIName }}"
-    sundaeswap_version = "${version}"
+  run_tag {
+    key = "Name"
+    value = "alonzo-testnet"
+  }
+  
+  run_tag {
+    key = "sundaeswap:name"
+    value = "alonzo-testnet"
+  }
+  
+  run_tag {
+    key = "sundaeswap:ami_id"
+    value = "{{ .SourceAMI }}"
   }
 
-  run_volume_tags {
-    sundaeswap_name = "alonzo-testnet"
-    sundaeswap_ami_id = "{{ .SourceAMI }}"
-    sundaeswap_ami_name = "{{ .SourceAMIName }}"
-    sundaeswap_version = "${version}"
+  run_tag {
+    key = "sundaeswap:ami_name"
+    value = "{{ .SourceAMIName }}"
+  }
+
+  run_tag {
+    key = "sundaeswap:version"
+    value = var.version
+  }
+
+  run_volume_tag {
+    name = "sundaeswap:name"
+    value = "alonzo-testnet"
+  }
+  
+  run_volume_tag {
+    name = "sundaeswap:ami_id"
+    value = "{{ .SourceAMI }}"
+  }
+
+  run_volume_tag {
+    name = "sundaeswap:ami_name"
+    value = "{{ .SourceAMIName }}"
+  }
+
+  run_volume_tag {
+    name = "sundaeswap:version"
+    value = var.version
   }
 
   source_ami_filter {
