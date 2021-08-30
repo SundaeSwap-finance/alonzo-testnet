@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DOCKER_COMPOSE_VERSION="1.29.2"
+
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
 
 set -eu
@@ -24,3 +26,10 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
 sudo usermod -aG docker ubuntu
+
+sudo systemctl start docker
+
+# install docker-compose
+#
+sudo curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x  /usr/local/bin/docker-compose

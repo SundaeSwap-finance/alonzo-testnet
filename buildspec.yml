@@ -1,0 +1,23 @@
+version: 0.2
+
+env:
+  git-credential-helper: yes
+  secrets-manager:
+    DEV_ACCESS_KEY_ID: "dev/user/codebuild:AWS_ACCESS_KEY_ID"
+    DEV_SECRET_ACCESS_KEY: "dev/user/codebuild:AWS_SECRET_ACCESS_KEY"
+
+proxy:
+  upload-artifacts: yes
+  logs: yes
+
+phases:
+  install:
+    commands:
+      - 'curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -'
+      - 'sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"'
+      - 'sudo apt-get update && sudo apt-get install packer'
+
+  build:
+    commands:
+      - VERSION="1.${CODEBUILD_BUILD_NUMBER:=0}.$(echo "${CODEBUILD_RESOLVED_SOURCE_VERSION:=$(date +%Y%m%d%H%M%S)}" | cut -c1-7)"
+      - packer build -var "region=${VAR_REGION}" -var "subnet_id=${VAR_SUBNET_ID}" -var "vpc_id=${VAR_VPC_ID}" -var "version=${VERSION}" cardano-node.pkr.hcl
