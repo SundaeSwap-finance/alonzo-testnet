@@ -2,9 +2,6 @@ version: 0.2
 
 env:
   git-credential-helper: yes
-  secrets-manager:
-    DEV_ACCESS_KEY_ID: "dev/user/codebuild:AWS_ACCESS_KEY_ID"
-    DEV_SECRET_ACCESS_KEY: "dev/user/codebuild:AWS_SECRET_ACCESS_KEY"
 
 proxy:
   upload-artifacts: yes
