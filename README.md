@@ -6,19 +6,28 @@ alonzo-testnet
 SundaeSwap heavily leverages AWS and consequently, this tooling has 
 been optimized to run in AWS.
 
-### Build the alonzo-purple AMI
+### Build the alonzo-testnet AMI
 
 To create your testnet, begin by creating a custom AWS AMI for the testnet
-instance.  
+instance.  First, create your variables file, `variables.pkrvars.hcl`.  In
+it, you'll need
+
+```hcl
+region    = "your-region-here"
+subnet_id = "your-subnet-here"
+vpc_id    = "your-vpc-here"
+```
 
 ```bash
-packer build cardano-node.pkr.hcl
+packer build -var-file="variables.pkrvars.hcl" cardano-node.pkr.hcl
 ```
 
 The AMI contains:
 
+* aws cli
+* docker
 * a complete nix development environment
-* cardano-node built from source using the alonzo-purple-1.0.1 tag
+* cardano-node built from source using the 1.29.0
 
 ### Quickstart
 
@@ -53,19 +62,19 @@ bootstrap mkfiles -n maxTxSize=32768
 bootstrap mkfiles -n minFeeA=100 -n minFeeB=12
 ```
 
-#### SundaeSwap - no fee env
+#### alonzo-purple - no fee env
 
 ```bash
 bootstrap mkfiles -m 31415 -n maxTxSize=65384 -n maxLovelaceSupply=10000000000000000 -n minFeeA=0
 ```
 
-#### alonzo-purple rc3
+#### alonzo-purple
 
 ```bash
 bootstrap mkfiles -m 31415 -n maxTxSize=16384 -n maxLovelaceSupply=10000000000000000 -n minFeeA=44 -n minFeeB=155381
 ```
 
-#### alonzo-purple rc2 with 10m epoch
+#### alonzo-purple with 10m epoch
 
 ```bash
 bootstrap mkfiles -m 31415 -n maxTxSize=16384 -n maxLovelaceSupply=10000000000000000 -n minFeeA=44 -n minFeeB=155381 -n epochLength=600
