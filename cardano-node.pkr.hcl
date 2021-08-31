@@ -19,7 +19,8 @@ source "amazon-ebs" "amazon" {
 
   ami_groups = ["all"]
 
-  ami_regions = ["us-west-2", "eu-west-1"]
+  # publish AMI to other regions
+  ami_regions = var.ami_regions
 
   launch_block_device_mappings {
     volume_type = "gp2"
@@ -32,12 +33,12 @@ source "amazon-ebs" "amazon" {
     key = "Name"
     value = "alonzo-testnet"
   }
-  
+
   run_tag {
     key = "sundaeswap:name"
     value = "alonzo-testnet"
   }
-  
+
   run_tag {
     key = "sundaeswap:ami_id"
     value = "{{ .SourceAMI }}"
@@ -57,12 +58,12 @@ source "amazon-ebs" "amazon" {
     key = "Name"
     value = "alonzo-testnet"
   }
-  
+
   tag {
     key = "sundaeswap:name"
     value = "alonzo-testnet"
   }
-  
+
   tag {
     key = "sundaeswap:ami_id"
     value = "{{ .SourceAMI }}"
@@ -82,7 +83,7 @@ source "amazon-ebs" "amazon" {
     name = "sundaeswap:name"
     value = "alonzo-testnet"
   }
-  
+
   run_volume_tag {
     name = "sundaeswap:ami_id"
     value = "{{ .SourceAMI }}"
@@ -145,6 +146,11 @@ build {
       "scripts/install-postgresql.sh",
     ]
   }
+}
+
+variable "ami_regions" {
+  type = list(string)
+  default = []
 }
 
 variable "region" {
