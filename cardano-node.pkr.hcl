@@ -8,7 +8,7 @@ packer {
 }
 
 source "amazon-ebs" "amazon" {
-  ami_name = "alonzo-{{timestamp}}"
+  ami_name = "sundaeswap--alonzo-testnet-{{timestamp}}"
 
   associate_public_ip_address = true
   instance_type = "m5.2xlarge"

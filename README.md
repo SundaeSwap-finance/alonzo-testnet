@@ -90,8 +90,8 @@ bootstrap mkfiles -m 31415 \
   --alonzo-set maxBlockExUnits.exUnitsSteps=40000000000 \
   --alonzo-set maxCollateralInputs=3 \
   --alonzo-set maxTxExUnits.exUnitsMem=10000000 \
-  --alonzo-set maxTxExUnits.exUnitsSteps=10000000000 
-  --alonzo-set maxValueSize=5000 \
+  --alonzo-set maxTxExUnits.exUnitsSteps=10000000000 \
+  --alonzo-set maxValueSize=5000
 ```
 
 ### Additional Packages
