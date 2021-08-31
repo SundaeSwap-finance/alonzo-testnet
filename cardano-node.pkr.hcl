@@ -115,6 +115,7 @@ build {
       "scripts/install-cardano-node.sh",
       "scripts/install-bootstrap.sh",
       "scripts/install-jq.sh",
+      "scripts/install-postgresql.sh",
     ]
   }
 }
