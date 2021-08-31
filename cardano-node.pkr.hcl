@@ -51,6 +51,31 @@ source "amazon-ebs" "amazon" {
     value = var.version
   }
 
+  tag {
+    key = "Name"
+    value = "alonzo-testnet"
+  }
+  
+  tag {
+    key = "sundaeswap:name"
+    value = "alonzo-testnet"
+  }
+  
+  tag {
+    key = "sundaeswap:ami_id"
+    value = "{{ .SourceAMI }}"
+  }
+
+  tag {
+    key = "sundaeswap:ami_name"
+    value = "{{ .SourceAMIName }}"
+  }
+
+  tag {
+    key = "sundaeswap:version"
+    value = var.version
+  }
+
   run_volume_tag {
     name = "sundaeswap:name"
     value = "alonzo-testnet"
