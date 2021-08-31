@@ -19,6 +19,8 @@ source "amazon-ebs" "amazon" {
 
   ami_groups = ["all"]
 
+  ami_regions = ["us-west-2", "eu-west-1"]
+
   launch_block_device_mappings {
     volume_type = "gp2"
     device_name = "/dev/sda1"
