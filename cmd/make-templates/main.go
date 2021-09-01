@@ -102,36 +102,39 @@ func action(_ *cli.Context) error {
 
 	urls := map[string]string{} // region -> url
 	for _, build := range manifest.Builds {
-		parts := strings.Split(build.ArtifactID, ":")
-		if len(parts) != 2 {
-			continue
+		artifacts := strings.Split(build.ArtifactID, ",")
+		for _, artifact := range artifacts {
+			parts := strings.Split(artifact, ":")
+			if len(parts) != 2 {
+				continue
+			}
+
+			region, ami := parts[0], parts[1]
+			t := makeTemplate(ami, opts.EC2.InstanceName, opts.Version)
+
+			data, err := t.YAML()
+			if err != nil {
+				return fmt.Errorf("failed to generate cloudformation template: %w", err)
+			}
+
+			filename := filepath.Join(opts.Output, fmt.Sprintf("alonzo-testnet-%v.template", region))
+			if err := ioutil.WriteFile(filename, data, 0644); err != nil {
+				return fmt.Errorf("failed to write cloudformation template, %v: %w", filename, err)
+			}
+
+			path, _ := filepath.Abs(filename)
+			fmt.Printf("wrote %v\n", path)
+
+			url := fmt.Sprintf("https://console.aws.amazon.com/cloudformation/home?region=%v#/stacks/new?stackName=alonzo-testnet&templateURL=https://s3.amazonaws.com/%v",
+				region,
+				filepath.Join(
+					opts.S3.Bucket,
+					opts.S3.Prefix,
+					filepath.Base(filename),
+				),
+			)
+			urls[region] = url
 		}
-
-		region, ami := parts[0], parts[1]
-		t := makeTemplate(ami, opts.EC2.InstanceName, opts.Version)
-
-		data, err := t.YAML()
-		if err != nil {
-			return fmt.Errorf("failed to generate cloudformation template: %w", err)
-		}
-
-		filename := filepath.Join(opts.Output, fmt.Sprintf("alonzo-testnet-%v.template", region))
-		if err := ioutil.WriteFile(filename, data, 0644); err != nil {
-			return fmt.Errorf("failed to write cloudformation template, %v: %w", filename, err)
-		}
-
-		path, _ := filepath.Abs(filename)
-		fmt.Printf("wrote %v\n", path)
-
-		url := fmt.Sprintf("https://console.aws.amazon.com/cloudformation/home?region=%v#/stacks/new?stackName=alonzo-testnet&templateURL=https://s3.amazonaws.com/%v",
-			region,
-			filepath.Join(
-				opts.S3.Bucket,
-				opts.S3.Prefix,
-				filepath.Base(filename),
-			),
-		)
-		urls[region] = url
 	}
 
 	if err := makeHTML(urls, opts.Output); err != nil {
