@@ -22,7 +22,10 @@ var opts struct {
 	Manifest string
 	Output   string
 	Version  string
-	S3       struct {
+	EC2      struct {
+		InstanceName string
+	}
+	S3 struct {
 		Bucket string
 		Prefix string
 	}
@@ -43,6 +46,12 @@ func main() {
 			Usage:       "output directory",
 			Required:    true,
 			Destination: &opts.Output,
+		},
+		&cli.StringFlag{
+			Name:        "instance-name",
+			Usage:       "default instance name",
+			Destination: &opts.EC2.InstanceName,
+			Value:       "alonzo-testnet",
 		},
 		&cli.StringFlag{
 			Name:        "s3-bucket",
@@ -99,7 +108,7 @@ func action(_ *cli.Context) error {
 		}
 
 		region, ami := parts[0], parts[1]
-		t := makeTemplate(ami, opts.Version)
+		t := makeTemplate(ami, opts.EC2.InstanceName, opts.Version)
 
 		data, err := t.YAML()
 		if err != nil {
@@ -174,10 +183,16 @@ func makeHTML(urls map[string]string, dir string) interface{} {
 	return nil
 }
 
-func makeTemplate(ami string, version string) *cloudformation.Template {
+func makeTemplate(ami, instanceName, version string) *cloudformation.Template {
 	t := cloudformation.NewTemplate()
 
 	t.Description = "launch private alonzo testnet"
+	t.Parameters["InstanceName"] = cloudformation.Parameter{
+		Type:        "String",
+		Description: "name of instance",
+		Default:     instanceName,
+		MinLength:   1,
+	}
 	t.Parameters["InstanceType"] = cloudformation.Parameter{
 		Type:        "String",
 		Description: "instance type to launch with",
@@ -248,7 +263,7 @@ func makeTemplate(ami string, version string) *cloudformation.Template {
 		Tags: []tags.Tag{
 			{
 				Key:   "Name",
-				Value: "alonzo-testnet",
+				Value: cloudformation.Ref("InstanceName"),
 			},
 			{
 				Key:   "sundaeswap:name",
