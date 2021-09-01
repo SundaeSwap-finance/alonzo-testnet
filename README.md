@@ -6,6 +6,18 @@ alonzo-testnet
 SundaeSwap heavily leverages AWS and consequently, this tooling has 
 been optimized to run in AWS.
 
+### Launch Stacks
+
+Launch AWS Cloudformation stack in specified region.  Each stack will spin up a single ec2 instance with a
+private alonzo testnet.
+
+Region    |  |
+:---      | :---   |
+eu-west-1 | [![Launch Stack](https://cdn.sundaeswap.finance/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=alonzo-testnet&templateURL=https://s3.amazonaws.com/sundaeswap-oss/alonzo-testnet/alonzo-testnet-eu-west-1.template)
+us-east-2 | [![Launch Stack](https://cdn.sundaeswap.finance/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=alonzo-testnet&templateURL=https://s3.amazonaws.com/sundaeswap-oss/alonzo-testnet/alonzo-testnet-us-east-2.template)
+us-west-2 | [![Launch Stack](https://cdn.sundaeswap.finance/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=alonzo-testnet&templateURL=https://s3.amazonaws.com/sundaeswap-oss/alonzo-testnet/alonzo-testnet-us-west-2.template)
+
+
 ### Build the alonzo-testnet AMI
 
 To create your testnet, begin by creating a custom AWS AMI for the testnet
