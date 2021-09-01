@@ -9,6 +9,8 @@ proxy:
 
 phases:
   install:
+    runtime-versions:
+      golang: 1.16
     commands:
       - 'curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add -'
       - 'apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"'
@@ -19,3 +21,10 @@ phases:
     commands:
       - VERSION="1.${CODEBUILD_BUILD_NUMBER:=0}.$(echo "${CODEBUILD_RESOLVED_SOURCE_VERSION:=$(date +%Y%m%d%H%M%S)}" | cut -c1-7)"
       - packer build -var "region=${VAR_REGION}" -var "subnet_id=${VAR_SUBNET_ID}" -var "vpc_id=${VAR_VPC_ID}" -var "version=${VERSION}" -var "ami_regions=${VAR_AMI_REGIONS}" cardano-node.pkr.hcl
+
+  post_build:
+    commands:
+      - export VERSION="1.${CODEBUILD_BUILD_NUMBER:=0}.$(echo "${CODEBUILD_RESOLVED_SOURCE_VERSION:=$(date +%Y%m%d%H%M%S)}" | cut -c1-7)"
+      - (cd cmd/make-templates && go get ./... && go run main.go --manifest ../../packer-manifest.json --output ../.. --s3-prefix alonzo-testnet)
+      - aws s3 cp --acl public-read alonzo-testnet-* s3://sundaeswap-oss/alonzo-testnet/
+      - aws s3 cp --acl public-read index.html       s3://sundaeswap-oss/alonzo-testnet/

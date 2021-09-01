@@ -7,8 +7,10 @@
 
 # ignore generated
 #
-cmd/bootstrap/go.sum
+go.sum
 mkfiles.sh
 mkfiles.sh.bootstrap
 bootstrap
 variables.pkrvars.hcl
+packer-manifest.json
+*.template

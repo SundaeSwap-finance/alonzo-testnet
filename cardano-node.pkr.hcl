@@ -120,6 +120,8 @@ build {
     "source.amazon-ebs.amazon"
   ]
 
+  post-processor "manifest" {}
+
   provisioner "file" {
     source = "cmd/bootstrap"
     destination = "/tmp/bootstrap"
