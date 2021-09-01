@@ -29,5 +29,6 @@ phases:
       - (cd cmd/make-templates && go get ./... && go run main.go --manifest ../../packer-manifest.json --output ../.. --s3-prefix alonzo-testnet)
       - pwd
       - ls
+      - cat packer-manifest.json
       - aws s3 cp --acl public-read alonzo-testnet-* s3://sundaeswap-oss/alonzo-testnet/
       - aws s3 cp --acl public-read index.html       s3://sundaeswap-oss/alonzo-testnet/
