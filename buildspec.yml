@@ -27,5 +27,7 @@ phases:
     commands:
       - export VERSION="1.${CODEBUILD_BUILD_NUMBER:=0}.$(echo "${CODEBUILD_RESOLVED_SOURCE_VERSION:=$(date +%Y%m%d%H%M%S)}" | cut -c1-7)"
       - (cd cmd/make-templates && go get ./... && go run main.go --manifest ../../packer-manifest.json --output ../.. --s3-prefix alonzo-testnet)
+      - pwd
+      - ls
       - aws s3 cp --acl public-read alonzo-testnet-* s3://sundaeswap-oss/alonzo-testnet/
       - aws s3 cp --acl public-read index.html       s3://sundaeswap-oss/alonzo-testnet/
