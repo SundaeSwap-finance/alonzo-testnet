@@ -22,19 +22,12 @@ sudo mkdir -p /etc/nix
 sudo mv /tmp/nix.conf /etc/nix/nix.conf
 
 
-# install cabal
-#
-. /home/ubuntu/.nix-profile/etc/profile.d/nix.sh
-nix-env -i cabal-install
-cabal update
-
-
 # set upper limit on GHC compiler
 #
 cat <<EOF >> "${HOME}/.bash_profile"
 
 # limit ghc max heap
 #
-export GHCRTS='-M12g -T -N'
+export GHCRTS='-M12g'
 
 EOF
