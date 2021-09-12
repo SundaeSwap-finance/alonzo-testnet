@@ -26,7 +26,6 @@ sudo mv /tmp/nix.conf /etc/nix/nix.conf
 #
 . /home/ubuntu/.nix-profile/etc/profile.d/nix.sh
 nix-env -i cabal-install
-nix-shell --run "cabal update"
 
 
 # set upper limit on GHC compiler
