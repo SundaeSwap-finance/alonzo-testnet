@@ -2,7 +2,7 @@
 
 set -eu
 
-export GIT_TAG=${GIT_TAG:=1.29.0}
+export GIT_TAG=${GIT_TAG:=1.30.1}
 export LD_LIBRARY_PATH="/lib:/usr/local/lib"
 
 
