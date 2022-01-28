@@ -7,6 +7,7 @@ sleep 15
 export DEBIAN_FRONTEND="noninteractive"
 
 sudo apt-get update -y
+sudo apt-get upgrade
 sudo apt-get install -y tree curl wget vim unzip
 
 
